@@ -20,25 +20,25 @@ public class UserController {
     }
 
     // GET all users
-    @GetMapping("/all")
+    @GetMapping("/ADMIN/all")
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(userServices.getAllUsers());
     }
 
     // GET user by ID
-    @GetMapping("/{id}")
+    @GetMapping("?PUBLIC/{id}")
     public ResponseEntity<User> getUserById(@PathVariable long id) throws Exception {
         return ResponseEntity.ok(userServices.getById(id));
     }
 
     // PUT (Update) user
-    @PutMapping("/update/{id}")
+    @PutMapping("/PUBLIC/update/{id}")
     public ResponseEntity<User> updateUser(@PathVariable long id, @RequestBody UpdateUserRequest request) throws Exception {
         return ResponseEntity.ok(userServices.updateMe(id, request));
     }
 
     // DELETE user
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/PUBLIC/delete/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable String id) throws Exception {
         userServices.deleteUser(id);
         return new ResponseEntity<>("User deleted successfully", HttpStatus.NO_CONTENT);

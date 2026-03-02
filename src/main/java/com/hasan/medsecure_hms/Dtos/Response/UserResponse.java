@@ -1,5 +1,6 @@
 package com.hasan.medsecure_hms.Dtos.Response;
 
+import com.hasan.medsecure_hms.Model.Role;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +17,7 @@ public class UserResponse {
     private String id;
     private String Name;
     private String username;
-    private String Role;
+    private Role Role;
     private String Address;
     private String Phone_no;
     private String Password;
