@@ -4,6 +4,8 @@ import com.hasan.medsecure_hms.Model.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,15 +22,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain (HttpSecurity httpSecurity){
         httpSecurity.
-                csrf( csrf -> csrf.disable())
+                csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth ->auth
                         .requestMatchers("/PUBLIC/**").permitAll()
                         .requestMatchers("/DOCTOR/**").hasRole("DOCTOR")
                         .requestMatchers("/ADMIN").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
-                .formLogin(form->form
-                        .permitAll()
+                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll
                 );
         return httpSecurity.build();
     }
