@@ -1,5 +1,5 @@
 -------------------------------------------------------
--- USERS DATA
+-- USERS TABLE DATA
 -------------------------------------------------------
 
 INSERT INTO users (name, username, role, address, phone_no, password, email)
@@ -10,23 +10,23 @@ VALUES
 
 ('Patient Ravi', 'patient_db', 'PATIENT', 'Pune', '7777777777', 'dummy', 'patient@test.com'),
 
-('Nurse Priya', 'nurse_db', 'STAFF', 'Chennai', '6666666666', 'dummy', 'nurse@test.com'),
+('Manager Amit', 'manager_db', 'ADMIN', 'Kolkata', '6666666666', 'dummy', 'manager@test.com'),
 
-('Manager Amit', 'manager_db', 'ADMIN', 'Kolkata', '5555555555', 'dummy', 'manager@test.com');
+('Nurse Priya', 'nurse_db', 'STAFF', 'Chennai', '5555555555', 'dummy', 'nurse@test.com');
 
 
 -------------------------------------------------------
--- HOSPITALS DATA
+-- HOSPITALS TABLE DATA
 -------------------------------------------------------
 
-INSERT INTO hospitals (name, address, contact_number, email, license_number, registration_date)
+INSERT INTO hospitals (name, email, address, contact_number, license_number, registration_date)
 VALUES
-('City Hospital', 'Mumbai', '8888888888', 'city@test.com', 'LIC001', '2024-01-01'),
+('City Hospital', 'city@test.com', 'Mumbai', '8888888888', 'LIC001', '2024-01-01'),
 
-('Apollo Clinic', 'Delhi', '7777777777', 'apollo@test.com', 'LIC002', '2023-12-10'),
+('Apollo Clinic', 'apollo@test.com', 'Delhi', '7777777777', 'LIC002', '2023-12-10'),
 
-('Sunrise Medical', 'Bangalore', '6666666666', 'sunrise@test.com', 'LIC003', '2024-02-15'),
+('Sunrise Medical', 'sunrise@test.com', 'Bangalore', '6666666666', 'LIC003', '2024-02-15'),
 
-('Green Valley Care', 'Pune', '5555555555', 'green@test.com', 'LIC004', '2023-11-20'),
+('Green Valley Care', 'green@test.com', 'Pune', '5555555555', 'LIC004', '2023-11-20'),
 
-('Global Health Center', 'Hyderabad', '4444444444', 'global@test.com', 'LIC005', '2024-03-01');
+('Global Health Center', 'global@test.com', 'Hyderabad', '4444444444', 'LIC005', '2024-03-01');
