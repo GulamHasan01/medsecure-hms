@@ -26,7 +26,7 @@ public class UserController {
     }
 
     // GET user by ID
-    @GetMapping("?PUBLIC/{id}")
+    @GetMapping("/PUBLIC/{id}")
     public ResponseEntity<User> getUserById(@PathVariable long id) throws Exception {
         return ResponseEntity.ok(userServices.getById(id));
     }
@@ -39,7 +39,7 @@ public class UserController {
 
     // DELETE user
     @DeleteMapping("/PUBLIC/delete/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable String id) throws Exception {
+    public ResponseEntity<String> deleteUser(@PathVariable long id) throws Exception {
         userServices.deleteUser(id);
         return new ResponseEntity<>("User deleted successfully", HttpStatus.NO_CONTENT);
     }
