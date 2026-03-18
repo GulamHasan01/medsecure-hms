@@ -24,7 +24,7 @@ public class Hospital {
     private String contactNumber;
 
     @Column(unique = true)
-    private String licenseNumber; // Sensitive internal data
+    private String licenseNumber;
 
     private String registrationDate;
 }

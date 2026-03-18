@@ -32,13 +32,13 @@ public class UserController {
     }
 
     // PUT (Update) user
-    @PutMapping("/PUBLIC/update/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable long id, @RequestBody UpdateUserRequest request) throws Exception {
-        return ResponseEntity.ok(userServices.updateMe(id, request));
+    @PutMapping("/ADMIN/update/{id}")
+    public ResponseEntity<User> updateUser( @RequestBody UpdateUserRequest request) throws Exception {
+        return ResponseEntity.ok(userServices.updateMe( request));
     }
 
     // DELETE user
-    @DeleteMapping("/PUBLIC/delete/{id}")
+    @DeleteMapping("/ADMIN/delete/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable long id) throws Exception {
         userServices.deleteUser(id);
         return new ResponseEntity<>("User deleted successfully", HttpStatus.NO_CONTENT);

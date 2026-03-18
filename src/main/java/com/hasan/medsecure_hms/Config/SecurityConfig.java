@@ -3,13 +3,16 @@ package com.hasan.medsecure_hms.Config;
 import com.hasan.medsecure_hms.Services.UserServices;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
 
 @Configuration
 public class SecurityConfig {
@@ -18,6 +21,11 @@ public class SecurityConfig {
 
     public SecurityConfig(UserServices userServices) {
         this.userServices = userServices;
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
     }
 
     @Bean
@@ -44,19 +52,16 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider())
                 .authorizeHttpRequests(auth -> auth
 
-                        .requestMatchers("/user/apis/PUBLIC/**").permitAll()
+                        .requestMatchers("/auth/**").permitAll()
 
                         .requestMatchers("/user/apis/DOCTOR/**").hasRole("DOCTOR")
-
                         .requestMatchers("/user/apis/ADMIN/**").hasRole("ADMIN")
-
                         .requestMatchers("/user/apis/PATIENT/**").hasRole("PATIENT")
 
                         .anyRequest().authenticated()
                 )
-                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
-                .logout(logout -> logout
-                        .logoutUrl("/logout"));
+                .formLogin(AbstractAuthenticationFilterConfigurer::disable)
+                .logout(logout -> logout.logoutUrl("/logout"));
 
         return http.build();
     }

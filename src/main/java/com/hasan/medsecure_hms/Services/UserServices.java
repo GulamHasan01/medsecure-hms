@@ -3,9 +3,12 @@ package com.hasan.medsecure_hms.Services;
 import com.hasan.medsecure_hms.Dtos.Request.UpdateUserRequest;
 import com.hasan.medsecure_hms.Model.User;
 import com.hasan.medsecure_hms.Repository.UserRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,16 +36,33 @@ public class UserServices implements UserDetailsService {
                 .orElseThrow(() -> new Exception("User not Found!"));
     }
 
-    public User updateMe(Long id, UpdateUserRequest updateUserRequest) throws Exception {
+    public User updateMe(UpdateUserRequest req) {
 
-        User existingUser = userRepository.findById(id)
-                .orElseThrow(() -> new Exception("User not Found!"));
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        assert auth != null;
+        String username = auth.getName();
 
-        if (updateUserRequest.getUsername() != null) {
-            existingUser.setUsername(updateUserRequest.getUsername());
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (req.getUsername() != null) {
+            user.setUsername(req.getUsername());
         }
 
-        return userRepository.save(existingUser);
+        if (req.getEmail() != null) {
+            user.setEmail(req.getEmail());
+        }
+
+        if (req.getName() != null) {
+            user.setName(req.getName());
+        }
+
+
+        if (req.getAddress() != null) {
+            user.setAddress(req.getAddress());
+        }
+
+        return userRepository.save(user);
     }
 
     public void deleteUser(Long id) throws Exception {
@@ -54,6 +74,9 @@ public class UserServices implements UserDetailsService {
         userRepository.deleteById(id);
     }
 
+
+
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
@@ -61,4 +84,6 @@ public class UserServices implements UserDetailsService {
                 .findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Username not found!"));
     }
+
+
 }
